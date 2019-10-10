@@ -13,7 +13,8 @@ cyan () { color ${CYAN} ${1}; }
 magenta () { color ${MAGENTA} ${1}; }
 
 is_git_branch () { [[ -d .git ]] || git rev-parse --git-dir > /dev/null 2>&1; }
-function get_git_branch () { git branch 2>/dev/null | cut -f 2 -d ' '; }
+get_git_branch () { git branch 2>/dev/null | cut -f 2 -d ' '; }
+get_git_repo() { basename "$(git rev-parse --show-toplevel)"; }
 
 function prompt () {
   local exit_status=$?
@@ -24,7 +25,7 @@ function prompt () {
   fi
   local dir_info=""
   if is_git_branch; then
-    dir_info="$(yellow "git")"
+    dir_info="$(yellow "$(get_git_repo)")"
     dir_info="${dir_info}:$(magenta "("$(get_git_branch)")")"
     dir_info="${dir_info}:$(cyan "//"$(git rev-parse --show-prefix))"
   else
