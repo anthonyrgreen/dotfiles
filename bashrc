@@ -28,7 +28,7 @@ function prompt () {
     dir_info="${dir_info}:$(magenta "("$(get_git_branch)")")"
     dir_info="${dir_info}:$(cyan "//"$(git rev-parse --show-prefix))"
   else
-    dir_info="$(cyan $(dirs))"
+    dir_info="$(cyan $(pwd | sed "s|^$HOME|~|"))"
   fi
   echo "[ ${dir_info} ${return_status_smiley} ] $ "
 }
